@@ -1,0 +1,21 @@
+Function MonteCarloIntegration(func, a, b, num_samples)
+    Input: func (function to integrate), a (lower limits), b (upper limits), num_samples (number of random samples)
+    
+    If length(a) != length(b) Then
+        Error "The dimension of lower and upper limits must be the same"
+    EndIf
+    
+    volume = Product(b - a)
+    
+    For each dimension i from 1 to length(a)
+        random_points[:, i] = a[i] + (b[i] - a[i]) * Random(num_samples)
+    EndFor
+    
+    For i from 1 to num_samples
+        function_values[i] = func(random_points[i, :])
+    EndFor
+    
+    integral_estimate = volume * Mean(function_values)
+    
+    Return integral_estimate, num_samples
+EndFunction
